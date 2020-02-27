@@ -71,8 +71,9 @@
         - 6
       when:
         - cisco_os == 'ios'
-
-
+  - name: Discover 192.168.254.0
+    - group_by: key=ML_{{ ansible_default_ipv4.network }}
+      when: ansible_default_ipv4.network == '192.168.254.0'
 
 
 
