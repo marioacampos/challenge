@@ -33,9 +33,11 @@ d)Para realizar 7 backups vamos a generar un crontab en donde definiremos lo sig
 
 *Recordar que si queremos ejecutar la misma tarea programada tendríamos que replicar el mismo crontab para nuestros 50 dispositivos.
 
-3.- Bonus Points
+3.- Ejecución
 
-a) Ejecutar 192.168.254.0/24 para que descubra nuevos SW dentro de nuestra RED.
+a) Para ejecutar nuestro playbook es necesario ejecutarlo de la siguiente manera. 
+
+ansible-playbook /etc/ansible/playbooks/cisco_backup.yml -i /etc/ansible/inventory/cisco -e "sw=Nombre de SW"
 
  
 
