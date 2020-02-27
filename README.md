@@ -1,5 +1,7 @@
 # challenge
 Ansible_Lab
+
+
 1.- Objetivo
 Se desarrolla solución de Challenge a través de Ansible que nos permitirá automatizar en base a la automatización de software, la gestión de configuraciones
 y además el despliegue de aplicaciones. Solución aplicada en base a infraestructura LAN para 50 Equipos SW 9300. Se levanta Laboratorio en modo Controlador-Nodo,
