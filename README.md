@@ -37,7 +37,7 @@ d)Para realizar 7 backups vamos a generar un crontab en donde definiremos lo sig
 
 a) Para ejecutar nuestro playbook es necesario ejecutarlo de la siguiente manera. 
 
-ansible-playbook /etc/ansible/playbooks/cisco_backup.yml -i /etc/ansible/inventory/cisco -e "sw=Nombre de SW"
+'ansible-playbook /etc/ansible/playbooks/cisco_backup.yml -i /etc/ansible/inventory/cisco -e "sw=Nombre de SW"'
 
  
 
