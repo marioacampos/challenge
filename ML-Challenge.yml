@@ -1,0 +1,78 @@
+- hosts: "{{ sw }}"
+  gather_facts: no
+  ignore_errors: yes
+  serial: 1
+  vars:
+    creds:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+
+  tasks:
+    - name: Create a root directory if don't exist
+      file:
+        path: "{{ backup_folder }}"
+        state: directory
+        mode: 0755i
+
+    - name: Create a individual device folder if don't exist
+      file:
+        path: "{{ backup_folder }}{{ inventory_hostname }}"
+        state: directory
+        mode: 0755
+
+    - name: Register timestamp variable
+      local_action: command date +%Y%m%d-%H:%M
+      register: timestamp
+
+    - name: Execute IOS-XE commands
+      ios_command:
+        provider: "{{ creds }}"
+        commands: "{{ item  }}"
+      register: commands_output
+      with_items:
+        - show run
+        - show vlan
+        - show interfaces status
+        - show etherchannel summary
+        - show logging
+        - show version
+        - show spanning-tree
+      when: 
+        - cisco_os == 'ios'
+
+    - name: Create IOS command folder if don't exist
+      file:
+        path: "{{ backup_folder }}{{ inventory_hostname }}/{{ commands_output.results[item].item }}"
+        state: directory
+        mode: 0755
+      with_items:
+        - 0
+        - 1
+        - 2 
+        - 3
+        - 4
+        - 5
+        - 6
+      when:
+        - cisco_os == 'ios'
+
+    - name: Save IOS command output on destination file
+      copy:
+        content: "{{ commands_output.results[item].stdout[0] }}"
+        dest:  "{{ backup_folder }}{{ inventory_hostname }}/{{ commands_output.results[item].item }}/{{ inventory_hostname }}_{{ commands_output.results[item].item }}_{{ timestamp.stdout }}.txt"
+      with_items:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      when:
+        - cisco_os == 'ios'
+
+
+
+
+
